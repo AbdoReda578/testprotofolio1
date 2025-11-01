@@ -1,11 +1,3 @@
-import meter1 from "../assets/img/meter1.svg";
-import meter2 from "../assets/img/meter2.svg";
-import meter3 from "../assets/img/meter3.svg";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import arrow1 from "../assets/img/arrow1.svg";
-import arrow2 from "../assets/img/arrow2.svg";
-
 import JS from "../assets/img/logos/JS.jpeg";
 import AS from "../assets/img/logos/AS.png";
 import cpp from "../assets/img/logos/c++.png";
@@ -16,10 +8,9 @@ import figma from "../assets/img/logos/FIG.png";
 import ill from "../assets/img/logos/AI.png";
 import photo from "../assets/img/logos/PH.png";
 import react from "../assets/img/logos/s.png";
-
-
-
-import colorSharp from "../assets/img/color-sharp.png"
+import colorSharp from "../assets/img/color-sharp.png";
+import { Card, CardContent } from '@/components/ui/card';
+import TrackVisibility from 'react-on-screen';
 
 export const Skills = () => {
   const responsive = {
