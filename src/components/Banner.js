@@ -48,30 +48,44 @@ export const Banner = () => {
   }
 
   return (
-    <section className="banner" id="home">
-      <Container>
-        <Row className="aligh-items-center">
-          <Col xs={12} md={6} xl={7}>
+    <section className="min-h-screen flex items-center bg-dark-bg py-20" id="home">
+      <div className="container mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="order-2 md:order-1">
             <TrackVisibility>
               {({ isVisible }) =>
               <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                <span className="tagline">Welcome to my Portfolio</span>
-                <h1>{`Hi! I'm Abdulrhman`} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Web Developer", "Grpahic Designer", "UI/UX Designer" ]'><span className="wrap">{text}</span></span></h1>
-                  <p>Abdulrahman is a passionate web developer focused on creating outstanding websites with a strong emphasis on User Experience (UX) and User Interface (UI) design. He has experience with technologies such as HTML, CSS, JavaScript, and React, and is currently working on developing his personal portfolio website. In addition to web development, Abdulrahman is also interested in desktop development, Android development, and cybersecurity.</p>
-                  <button onClick={() => console.log('connect')}>Let’s Connect <ArrowRightCircle size={25} /></button>
+                <span className="inline-block px-4 py-2 border border-white/30 rounded-full text-white/80 text-sm mb-6">
+                  Welcome to my Portfolio
+                </span>
+                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                  {`Hi! I'm Abdulrhman `}
+                  <span className="bg-gradient-to-r from-primary-purple to-primary-blue bg-clip-text text-transparent">
+                    <span className="wrap">{text}</span>
+                  </span>
+                </h1>
+                <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-2xl">
+                  Abdulrahman is a passionate web developer focused on creating outstanding websites with a strong emphasis on User Experience (UX) and User Interface (UI) design. He has experience with technologies such as HTML, CSS, JavaScript, and React, and is currently working on developing his personal portfolio website. In addition to web development, Abdulrahman is also interested in desktop development, Android development, and cybersecurity.
+                </p>
+                <Button
+                  className="bg-gradient-to-r from-primary-purple to-primary-blue text-white text-lg px-8 py-6 rounded-full hover:scale-105 transition-transform"
+                  onClick={() => window.location.hash = '#connect'}
+                >
+                  Let's Connect <ArrowRightCircle className="ml-2" size={25} />
+                </Button>
               </div>}
             </TrackVisibility>
-          </Col>
-          <Col xs={12} md={6} xl={5}>
+          </div>
+          <div className="order-1 md:order-2">
             <TrackVisibility>
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__zoomIn" : ""}>
-                  <img src={headerImg} alt="Header Img"/>
+                  <img src={headerImg} alt="Header" className="w-full max-w-md mx-auto"/>
                 </div>}
             </TrackVisibility>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
