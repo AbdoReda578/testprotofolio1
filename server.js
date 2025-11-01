@@ -25,28 +25,70 @@ app.post('/contact', async (req, res) => {
   const { firstName, lastName, email, phone, message } = req.body;
   const values = [[firstName, lastName, email, phone, message]];
 
-  console.log("Request body: ", req.body);  // Check the incoming request data
+  console.log("Request body: ", req.body);
 
+  // Try Telegram first if credentials are configured
+  if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
+    try {
+      const telegramMessage = `📬 New Contact Form Submission
+
+👤 Name: ${firstName} ${lastName}
+📧 Email: ${email}
+📱 Phone: ${phone || 'Not provided'}
+
+💬 Message:
+${message}`;
+
+      const telegramResponse = await fetch(
+        `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            chat_id: process.env.TELEGRAM_CHAT_ID,
+            text: telegramMessage,
+            parse_mode: 'HTML',
+          }),
+        }
+      );
+
+      if (telegramResponse.ok) {
+        console.log('✅ Telegram sent successfully');
+        return res.status(200).json({ code: 200, message: 'Message sent successfully.' });
+      } else {
+        console.log('⚠️ Telegram failed, falling back to Google Sheets');
+      }
+    } catch (telegramError) {
+      console.error('⚠️ Telegram error:', telegramError.message);
+      console.log('Falling back to Google Sheets');
+    }
+  } else {
+    console.log('⚠️ Telegram credentials not configured, using Google Sheets');
+  }
+
+  // Fallback to Google Sheets
   try {
-    const range = 'datasheetproto1!A1'; 
+    const range = process.env.GOOGLE_SHEETS_SHEET_NAME
+      ? `${process.env.GOOGLE_SHEETS_SHEET_NAME}!A1`
+      : 'datasheetproto1!A1';
+
     const response = await sheets.spreadsheets.values.append({
-      
-      spreadsheetId: '1zH46jNtr8HbzJazvxgXIeUecf7JmwojWHtW2h1AGUEU',
+      spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID || '1zH46jNtr8HbzJazvxgXIeUecf7JmwojWHtW2h1AGUEU',
       range: range,
       valueInputOption: 'RAW',
       resource: {
-        "values": [
-    [
-      "Test Entry"
-    ]
-  ]
+        values: values
       },
     });
-    
-      res.status(200).json({ code: 200, message: 'Data sent to Google Sheets successfully.' });
+
+    console.log('✅ Google Sheets backup successful');
+    res.status(200).json({ code: 200, message: 'Message sent successfully.' });
   } catch (error) {
-      console.error('Error appending data to Google Sheets:', JSON.stringify(error, null, 2)); // Improved error logging
-      res.status(500).json({ code: 500, message: 'An error occurred while sending data to Google Sheets.' });
+    console.error('❌ Both Telegram and Google Sheets failed');
+    console.error('Error:', JSON.stringify(error, null, 2));
+    res.status(500).json({ code: 500, message: 'An error occurred while sending your message.' });
   }
 });
 
