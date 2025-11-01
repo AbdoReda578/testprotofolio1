@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Col, Row, Alert } from "react-bootstrap";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export const Newsletter = ({ status, message, onValidated }) => {
   const [email, setEmail] = useState('');
@@ -22,25 +23,36 @@ export const Newsletter = ({ status, message, onValidated }) => {
   }
 
   return (
-      <Col lg={12}>
-        <div className="newsletter-bx wow slideInUp">
-          <Row>
-            <Col lg={12} md={6} xl={5}>
-              <h3>Subscribe to our Newsletter<br></br> & Never miss latest updates</h3>
-              {status === 'sending' && <Alert>Sending...</Alert>}
-              {status === 'error' && <Alert variant="danger">{message}</Alert>}
-              {status === 'success' && <Alert variant="success">{message}</Alert>}
-            </Col>
-            <Col md={6} xl={7}>
-              <form onSubmit={handleSubmit}>
-                <div className="new-email-bx">
-                  <input value={email} type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" />
-                  <button type="submit">Submit</button>
-                </div>
-              </form>
-            </Col>
-          </Row>
+    <div className="col-span-2 mb-8">
+      <div className="bg-dark-bg rounded-2xl p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Subscribe to our Newsletter<br />& Never miss latest updates
+            </h3>
+            {status === 'sending' && <p className="text-white/70">Sending...</p>}
+            {status === 'error' && <p className="text-red-500">{message}</p>}
+            {status === 'success' && <p className="text-green-500">{message}</p>}
+          </div>
+          <div>
+            <form onSubmit={handleSubmit} className="flex gap-2">
+              <Input
+                value={email}
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email Address"
+                className="bg-dark-secondary border-white/10 text-white placeholder:text-white/50"
+              />
+              <Button
+                type="submit"
+                className="bg-gradient-to-r from-primary-purple to-primary-blue text-white hover:scale-105 transition-transform"
+              >
+                Submit
+              </Button>
+            </form>
+          </div>
         </div>
-      </Col>
+      </div>
+    </div>
   )
 }
