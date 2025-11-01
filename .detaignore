@@ -1,0 +1,10 @@
+node_modules/
+.git/
+.env
+build/
+src/
+public/
+*.md
+package-lock.json
+.gitignore
+README.md
