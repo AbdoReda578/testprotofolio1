@@ -1,16 +1,14 @@
-import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
 import { ProjectCard } from "./ProjectCard";
 import projImg1 from "../assets/img/project-img1.png";
 import projImg2 from "../assets/img/project-img2.png";
 import projImg3 from "../assets/img/project-img3.png";
 import colorSharp2 from "../assets/img/color-sharp2.png";
-
 import img1 from "../assets/img/IMG1.png";
 import img2 from "../assets/img/img2.png";
 import img3 from "../assets/img/img3.png";
-
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const Projects = () => {
 
