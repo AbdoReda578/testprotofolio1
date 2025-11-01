@@ -89,6 +89,11 @@ ${message}`;
   }
 
   // Fallback to Google Sheets
+  if (!sheets) {
+    console.error('❌ Google Sheets not configured and Telegram failed');
+    return res.status(500).json({ code: 500, message: 'Unable to send message. Please try again later.' });
+  }
+
   try {
     const range = process.env.GOOGLE_SHEETS_SHEET_NAME
       ? `${process.env.GOOGLE_SHEETS_SHEET_NAME}!A1`
