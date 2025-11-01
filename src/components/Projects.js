@@ -46,56 +46,50 @@ export const Projects = () => {
   ];
 
   return (
-    <section className="project" id="projects">
-      <Container>
-        <Row>
-          <Col size={12}>
-            <TrackVisibility>
-              {({ isVisible }) =>
-              <div className={isVisible ? "animate__animated animate__fadeIn": ""}>
-                <h2>Projects</h2>
-                <p>Some of My Projects.</p>
-                <Tab.Container id="projects-tabs" defaultActiveKey="first">
-                  <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
-                    <Nav.Item>
-                      <Nav.Link eventKey="first">Tab 1</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="third">Tab 3</Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                  <Tab.Content id="slideInUp" className={isVisible ? "animate__animated animate__slideInUp" : ""}>
-                    <Tab.Pane eventKey="first">
-                      <Row>
-                        {
-                          projects.map((project, index) => {
-                            return (
-                              <ProjectCard
-                                key={index}
-                                {...project}
-                                />
-                            )
-                          })
-                        }
-                      </Row>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="section">
-                      <p></p>
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="third">
-                      <p>.</p>
-                    </Tab.Pane>
-                  </Tab.Content>
-                </Tab.Container>
-              </div>}
-            </TrackVisibility>
-          </Col>
-        </Row>
-      </Container>
-      <img className="background-image-right" src={colorSharp2}></img>
+    <section className="relative py-20 bg-dark-bg" id="projects">
+      <div className="container mx-auto px-4">
+        <TrackVisibility>
+          {({ isVisible }) =>
+            <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+              <h2 className="text-5xl font-bold text-white text-center mb-4">Projects</h2>
+              <p className="text-white/60 text-center mb-12">Some of My Projects.</p>
+
+              <Tabs defaultValue="tab1" className="w-full">
+                <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-12 bg-dark-secondary">
+                  <TabsTrigger
+                    value="tab1"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary-purple data-[state=active]:to-primary-blue data-[state=active]:text-white"
+                  >
+                    Tab 1
+                  </TabsTrigger>
+                  <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+                  <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+                </TabsList>
+
+                <TabsContent
+                  value="tab1"
+                  className={isVisible ? "animate__animated animate__slideInUp" : ""}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {projects.map((project, index) => (
+                      <ProjectCard key={index} {...project} />
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="tab2">
+                  <p className="text-white/60 text-center">Coming soon...</p>
+                </TabsContent>
+
+                <TabsContent value="tab3">
+                  <p className="text-white/60 text-center">Coming soon...</p>
+                </TabsContent>
+              </Tabs>
+            </div>
+          }
+        </TrackVisibility>
+      </div>
+      <img className="absolute top-0 right-0 w-1/2 opacity-20 -z-10" src={colorSharp2} alt="" />
     </section>
   )
 }
