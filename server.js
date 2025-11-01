@@ -6,9 +6,13 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// CORS configuration for production
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 const credentialsPath = path.join(__dirname, '../../../savejobs1-965277b38d22.json');
