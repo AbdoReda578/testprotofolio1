@@ -1,0 +1,9 @@
+micros:
+  - name: backend
+    env:
+      - name: TELEGRAM_BOT_TOKEN
+        value: "8028946023:AAFw5-YD6oC5i4lhZfqgVxwBEizLIulzJks"
+      - name: TELEGRAM_CHAT_ID
+        value: "6101360046"
+      - name: NODE_ENV
+        value: "production"
