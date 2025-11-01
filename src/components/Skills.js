@@ -13,81 +13,47 @@ import { Card, CardContent } from '@/components/ui/card';
 import TrackVisibility from 'react-on-screen';
 
 export const Skills = () => {
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
-  };
+  const skills = [
+    { name: "CSS3", logo: cs3 },
+    { name: "HTML5", logo: Html },
+    { name: "JavaScript", logo: JS },
+    { name: "Figma", logo: figma },
+    { name: "React", logo: react },
+    { name: "Android Application", logo: AS },
+    { name: "C++", logo: cpp },
+    { name: "C#", logo: cs },
+    { name: "Illustrator", logo: ill },
+    { name: "PhotoShop", logo: photo }
+  ];
 
   return (
-    <section className="skill" id="skills">
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    <div className="skill-bx wow zoomIn">
-                        <h2>Skills</h2>
-                        <p>This is some of my skills.</p>
-                        <Carousel responsive={responsive} infinite={true} className="owl-carousel owl-theme skill-slider">
-                            <div className="item">
-                                <img src={cs3} alt="Image" className="item-img" />
-                                <h5>CSS3</h5>
-                            </div>
-                            <div className="item">
-                                <img src={Html} alt="Image" className="item-img" />
-                                <h5>HTML5</h5>
-                            </div>
-                            <div className="item">
-                                <img src={JS} alt="Image" className="item-img" />
-                                <h5>JavaScript</h5>
-                            </div>
-                            <div className="item">
-                                <img src={figma} alt="Image" className="item-img" />
-                                <h5>Figma</h5>
-                            </div>
-                            <div className="item">
-                                <img src={react} alt="Image" className="item-img" />
-                                <h5>Web Development - React</h5>
-                            </div>
-                            <div className="item">
-                                <img src={AS} alt="Image" className="item-img" />
-                                <h5>Android Application</h5>
-                            </div>
-                            <div className="item">
-                                <img src={cpp} alt="Image" className="item-img" />
-                                <h5>C++</h5>
-                            </div>
-                            <div className="item">
-                                <img src={cs} alt="Image" className="item-img" />
-                                <h5>C#</h5>
-                            </div>
-                            <div className="item">
-                                <img src={ill} alt="Image" className="item-img" />
-                                <h5>Illustrator</h5>
-                            </div>
-                            <div className="item">
-                                <img src={photo} alt="Image" className="item-img" />
-                                <h5>PhotoShop</h5>
-                            </div>
-                        </Carousel>
-                    </div>
-                </div>
-            </div>
+    <section className="relative py-20 bg-dark-bg overflow-hidden" id="skills">
+      <div className="container mx-auto px-4">
+        <div className="bg-dark-secondary rounded-3xl p-12 relative z-10">
+          <h2 className="text-5xl font-bold text-white text-center mb-4">Skills</h2>
+          <p className="text-white/60 text-center mb-12">This is some of my skills.</p>
+
+          <TrackVisibility>
+            {({ isVisible }) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {skills.map((skill, index) => (
+                  <Card
+                    key={index}
+                    className={`bg-dark-bg border-white/10 hover:border-primary-purple/50 transition-all hover:scale-105 group ${isVisible ? 'animate__animated animate__fadeIn' : ''}`}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <CardContent className="flex flex-col items-center justify-center p-6">
+                      <img src={skill.logo} alt={skill.name} className="w-20 h-20 object-contain mb-4" />
+                      <h5 className="text-white text-center font-medium">{skill.name}</h5>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TrackVisibility>
         </div>
-        <img className="background-image-left" src={colorSharp} alt="Image" />
+      </div>
+      <img className="absolute bottom-0 left-0 w-1/2 opacity-30 -z-10" src={colorSharp} alt="" />
     </section>
   )
 }
