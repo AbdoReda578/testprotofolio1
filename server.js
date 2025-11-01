@@ -15,15 +15,31 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 
-const credentialsPath = path.join(__dirname, '../../../savejobs1-965277b38d22.json');
-const credentials = require(credentialsPath);
+// Google Sheets credentials - handles both local and production
+let credentials;
+let sheets;
 
-const auth = new google.auth.GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
+try {
+  if (process.env.GOOGLE_CREDENTIALS) {
+    // Production: Use environment variable
+    credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+  } else {
+    // Local: Use file path
+    const credentialsPath = path.join(__dirname, '../../../savejobs1-965277b38d22.json');
+    credentials = require(credentialsPath);
+  }
 
-const sheets = google.sheets({ version: 'v4', auth });
+  const auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+
+  sheets = google.sheets({ version: 'v4', auth });
+  console.log('✅ Google Sheets initialized successfully');
+} catch (error) {
+  console.warn('⚠️ Google Sheets not configured - will rely on Telegram only');
+  console.warn('Error:', error.message);
+}
 
 app.post('/contact', async (req, res) => {
   const { firstName, lastName, email, phone, message } = req.body;
